@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+node_modules/
+evidencias/*.json
+evidencias/*.log
+evidencias/*.txt
+!evidencias/README.md
+.docker-local/
+.tools/
+android/local.properties
+**/.gradle/
+**/build/
+*.apk

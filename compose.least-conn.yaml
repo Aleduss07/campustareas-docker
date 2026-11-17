@@ -1,0 +1,4 @@
+services:
+  balanceador:
+    volumes:
+      - ./nginx/least-conn.conf:/etc/nginx/conf.d/default.conf:ro
