@@ -2,10 +2,9 @@
 .env.*
 !.env.example
 node_modules/
-evidencias/*.json
-evidencias/*.log
-evidencias/*.txt
-!evidencias/README.md
+/evidencias/
+/informe/*
+!/informe/Informe CampusTareas Docker - Revisado.pdf
 .docker-local/
 .tools/
 .idea/

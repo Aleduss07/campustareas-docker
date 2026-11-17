@@ -1,4 +1,0 @@
-Trivy ejecutado correctamente. Imagen: campus-api:1.0.0
-{'MEDIUM': 13, 'HIGH': 6, 'LOW': 1}
-Hallazgos: 20
-Reporte: trivy.json

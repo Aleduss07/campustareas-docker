@@ -1,60 +1,19 @@
-# CampusTareas · Docker, Nginx y cliente web
+# CampusTareas
 
-Implementación de la guía con tres réplicas, PostgreSQL persistente, balanceo Nginx y los cinco retos opcionales preparados. Por indicación del usuario, la aplicación Android se sustituye por un cliente web.
+API Node.js con PostgreSQL, cliente web y tres réplicas detrás de Nginx.
 
-**Inicio:** `scripts/Preparar.ps1`, después `docker compose up -d --build --wait` y abrir **http://localhost:8080**.
-
-- [Guía de ejecución y pruebas](GUIA-EJECUCION.md)
-- [Informe y ocho respuestas de análisis](INFORME.md)
-- [Informe revisado en la hoja membretada original (Word)](informe/Informe%20CampusTareas%20Docker%20-%20Revisado.docx)
-- [Informe revisado en PDF, con capturas integradas](informe/Informe%20CampusTareas%20Docker%20-%20Revisado.pdf)
-- [Resultados de las validaciones](VALIDACION.md)
-- [Evidencias que generan los scripts](evidencias/README.md)
-
-Despliegue y pruebas reales completados: persistencia, round robin, least_conn, caída de réplicas, cliente web de escritorio/móvil, versión 1.1.0 y escaneo Trivy. Imagen publicada y descarga verificada: `ghcr.io/aleduss07/campus-api:1.0.0`. Los cinco retos opcionales están completados.
-
-Repositorio: https://github.com/Aleduss07/campustareas-docker (privado).
-
-[Vulnerabilidades encontradas y análisis de CVE](VULNERABILIDADES.md).
-
----
-
-Este proyecto contiene la API REST de CampusTareas en Node.js con PostgreSQL.
-La API ya está terminada: el trabajo de las prácticas es **desplegarla**.
-
-```
-campustareas/
-└── api/
-    ├── package.json
-    ├── package-lock.json
-    └── src/
-        ├── server.js   # rutas, salud y apagado ordenado
-        └── db.js       # conexión a PostgreSQL y creación de la tabla
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Preparar.ps1
+docker compose up -d --build --wait
 ```
 
-## Endpoints
+Aplicación: http://localhost:8080. API: http://localhost:8080/v1/.
 
-| Método | Ruta                  | Qué hace                                                  |
-|--------|-----------------------|-----------------------------------------------------------|
-| GET    | `/health/live`        | 200 si el proceso está vivo                               |
-| GET    | `/health/ready`       | 200 si la base de datos responde; 503 si no               |
-| GET    | `/v1/info`            | Versión y nombre de la réplica que atendió                |
-| GET    | `/v1/tareas`          | Lista las tareas                                          |
-| POST   | `/v1/tareas`          | Crea una tarea: `{"titulo", "descripcion", "fechaEntrega"}` |
-| PATCH  | `/v1/tareas/{id}`     | Marca una tarea: `{"completada": true}`                   |
-| GET    | `/v1/trabajo-pesado`  | Consume CPU unos 50 ms (práctica de autoescalado)         |
+- `compose.una.yaml`: despliegue de una réplica y prueba de persistencia.
+- `compose.yaml`: despliegue final con tres réplicas.
+- `compose.least-conn.yaml`: configuración alternativa de balanceo.
+- `scripts/`: ejecución de los pasos y retos de la práctica.
+- [Informe final con capturas](informe/Informe%20CampusTareas%20Docker%20-%20Revisado.pdf).
+- [Imagen publicada en GitHub Packages](https://github.com/users/Aleduss07/packages/container/package/campus-api): `ghcr.io/aleduss07/campus-api:1.0.0`.
 
-## Variables de entorno
-
-| Variable       | Obligatoria | Valor por defecto | Ejemplo                                        |
-|----------------|-------------|-------------------|------------------------------------------------|
-| `DATABASE_URL` | Sí          | —                 | `postgres://app:secret@db:5432/campus`         |
-| `PORT`         | No          | `3000`            | `3000`                                         |
-| `APP_VERSION`  | No          | `dev`             | `1.0.0`                                        |
-| `DB_POOL_MAX`  | No          | `10`              | `10`                                           |
-
-Sin `DATABASE_URL` la API no arranca. La tabla `tareas` se crea sola la primera
-vez que la API se conecta a la base de datos.
-
-Cada respuesta incluye la cabecera `X-Replica` con el nombre del contenedor o
-Pod que la atendió.
+`.env` contiene la configuración local y no se publica. Las variables se documentan en `.env.example`.

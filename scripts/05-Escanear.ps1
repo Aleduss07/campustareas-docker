@@ -8,5 +8,4 @@ try {
         $reporte = Get-Content evidencias/trivy.json -Raw | ConvertFrom-Json
         $reporte.Results | ForEach-Object { $_.Vulnerabilities } | Where-Object { $_ } | Select-Object VulnerabilityID,PkgName,InstalledVersion,FixedVersion,Severity | Format-Table -AutoSize
     }
-    Write-Output 'Analiza una CVE real del resultado en INFORME.md. Si no hay hallazgos, registra ese resultado sin inventar una CVE.'
 } finally { Stop-Transcript }
