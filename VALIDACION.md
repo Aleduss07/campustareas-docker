@@ -21,3 +21,5 @@ permission denied while trying to connect to the docker API at npipe:////./pipe/
 Docker CLI 29.7.2 y Compose 5.3.1 detectados. También falla el acceso al pipe `dockerDesktopLinuxEngine`. El usuario indicó haber activado acceso completo, pero una nueva prueba siguió ejecutándose como `CodexSandboxOffline`, sin acceso al motor. No se alteraron permisos del host ni se intentó eludir el aislamiento.
 
 Todavía no se han verificado: construcción de imágenes, sintaxis Nginx mediante `nginx -t`, peticiones reales de la API con PostgreSQL, persistencia, balanceo, interfaz renderizada en navegador, escaneo Scout, inicio de sesión o push GHCR. Los scripts preparados producen esas comprobaciones cuando exista acceso. La validación estática no reemplaza esas pruebas.
+
+Se intentó iniciar el Chromium local para inspección visual; Windows lo bloqueó con `Una directiva de Control de aplicaciones bloqueó este archivo. (0x11C7)`. No se obtuvo captura ni se considera aprobada la revisión visual.
