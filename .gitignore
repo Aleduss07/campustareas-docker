@@ -11,3 +11,4 @@ evidencias/*.txt
 .idea/
 __pycache__/
 *.pyc
+~$*.docx
