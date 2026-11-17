@@ -1,51 +1,85 @@
-$ docker tag campus-api:1.0.0 ghcr.io/aleduss07/campus-api:1.0.0
-
 $ docker push ghcr.io/aleduss07/campus-api:1.0.0
 The push refers to repository [ghcr.io/aleduss07/campus-api]
-ed51f629e640: Waiting
+b808e6b89834: Waiting
 44136fa355b3: Waiting
 86781d25d398: Waiting
 881fc932939e: Waiting
-ed51f629e640: Waiting
-44136fa355b3: Waiting
-86781d25d398: Waiting
-881fc932939e: Waiting
-ed51f629e640: Waiting
-44136fa355b3: Waiting
-86781d25d398: Waiting
-881fc932939e: Waiting
-ed51f629e640: Waiting
-44136fa355b3: Waiting
-86781d25d398: Waiting
-881fc932939e: Waiting
-ed51f629e640: Waiting
-44136fa355b3: Waiting
-86781d25d398: Waiting
-881fc932939e: Waiting
-ed51f629e640: Waiting
+b808e6b89834: Waiting
 44136fa355b3: Waiting
 86781d25d398: Waiting
 881fc932939e: Waiting
 881fc932939e: Waiting
-ed51f629e640: Waiting
+b808e6b89834: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
 44136fa355b3: Waiting
 86781d25d398: Waiting
 881fc932939e: Waiting
-ed51f629e640: Waiting
-44136fa355b3: Waiting
-86781d25d398: Waiting
-ed51f629e640: Waiting
+b808e6b89834: Waiting
+b808e6b89834: Waiting
 44136fa355b3: Waiting
 86781d25d398: Waiting
 881fc932939e: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+b808e6b89834: Waiting
+44136fa355b3: Waiting
 44136fa355b3: Waiting
 86781d25d398: Waiting
+881fc932939e: Waiting
+b808e6b89834: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+b808e6b89834: Waiting
+44136fa355b3: Waiting
+b808e6b89834: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+b808e6b89834: Already exists
+44136fa355b3: Waiting
+86781d25d398: Layer already exists
 881fc932939e: Waiting
 7eb569707982: Waiting
 7bb632bc9bd7: Waiting
-e95ec166e666: Waiting
-40a0e09055aa: Waiting
-a0f34f55e235: Waiting
-ed51f629e640: Waiting
+44136fa355b3: Waiting
+881fc932939e: Waiting
+7eb569707982: Waiting
+7bb632bc9bd7: Waiting
 fcf6390bdd9b: Waiting
-error from registry: permission_denied: The token provided does not match expected scopes.
+44136fa355b3: Waiting
+881fc932939e: Waiting
+7eb569707982: Waiting
+7bb632bc9bd7: Waiting
+a0f34f55e235: Waiting
+40a0e09055aa: Waiting
+fcf6390bdd9b: Waiting
+44136fa355b3: Already exists
+e95ec166e666: Waiting
+881fc932939e: Layer already exists
+7eb569707982: Layer already exists
+7bb632bc9bd7: Layer already exists
+a0f34f55e235: Waiting
+40a0e09055aa: Waiting
+fcf6390bdd9b: Waiting
+e95ec166e666: Waiting
+a0f34f55e235: Layer already exists
+40a0e09055aa: Layer already exists
+fcf6390bdd9b: Layer already exists
+e95ec166e666: Layer already exists
+1.0.0: digest: sha256:0cc9f13301eb00beeed48ade831ac6f380d0aaa9b97c48e48f83b82cf9d303fa size: 856
+
+Exit code: 0
+
+$ docker pull ghcr.io/aleduss07/campus-api@sha256:0cc9f13301eb00beeed48ade831ac6f380d0aaa9b97c48e48f83b82cf9d303fa
+ghcr.io/aleduss07/campus-api@sha256:0cc9f13301eb00beeed48ade831ac6f380d0aaa9b97c48e48f83b82cf9d303fa: Pulling from aleduss07/campus-api
+Digest: sha256:0cc9f13301eb00beeed48ade831ac6f380d0aaa9b97c48e48f83b82cf9d303fa
+Status: Image is up to date for ghcr.io/aleduss07/campus-api@sha256:0cc9f13301eb00beeed48ade831ac6f380d0aaa9b97c48e48f83b82cf9d303fa
+ghcr.io/aleduss07/campus-api@sha256:0cc9f13301eb00beeed48ade831ac6f380d0aaa9b97c48e48f83b82cf9d303fa
+
+Exit code: 0
+
+$ docker run --rm --entrypoint node ghcr.io/aleduss07/campus-api@sha256:0cc9f13301eb00beeed48ade831ac6f380d0aaa9b97c48e48f83b82cf9d303fa -p JSON.stringify({version:process.env.APP_VERSION,uid:process.getuid()})
+{"version":"1.0.0","uid":1000}
+
+Exit code: 0

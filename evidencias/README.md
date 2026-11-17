@@ -14,4 +14,4 @@ Evidencias de ejecuciones reales:
 - reto-version.log: respuestas reales con version 1.1.0.
 - 08-web.log y captura-web.png: tarea creada desde el navegador y prueba con una sola replica.
 
-01-imagen-y-configuracion.log complementa la transcripcion manual con salidas nativas completas. reto-trivy.log y trivy.json documentan el escaneo alternativo. Las capturas PNG son del cliente real. reto-ghcr.log registra un intento rechazado por scopes, pendiente de una publicacion correcta. VALIDACION.md resume los resultados.
+01-imagen-y-configuracion.log complementa la transcripcion manual con salidas nativas completas. reto-trivy.log y trivy.json documentan el escaneo alternativo. Las capturas PNG son del cliente real. reto-ghcr.log registra el push correcto, su digest, la descarga y la ejecucion de la imagen publicada. VALIDACION.md resume los resultados.

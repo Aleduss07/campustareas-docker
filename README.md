@@ -6,10 +6,10 @@ Implementación de la guía con tres réplicas, PostgreSQL persistente, balanceo
 
 - [Guía de ejecución y pruebas](GUIA-EJECUCION.md)
 - [Informe y ocho respuestas de análisis](INFORME.md)
-- [Validaciones realizadas y pendientes](VALIDACION.md)
+- [Resultados de las validaciones](VALIDACION.md)
 - [Evidencias que generan los scripts](evidencias/README.md)
 
-Despliegue y pruebas reales completados: persistencia, round robin, least_conn, caída de réplicas, cliente web de escritorio/móvil, versión 1.1.0 y escaneo Trivy. La publicación GHCR espera una credencial con `write:packages`.
+Despliegue y pruebas reales completados: persistencia, round robin, least_conn, caída de réplicas, cliente web de escritorio/móvil, versión 1.1.0 y escaneo Trivy. Imagen publicada y descarga verificada: `ghcr.io/aleduss07/campus-api:1.0.0`. Los cinco retos opcionales están completados.
 
 Repositorio: https://github.com/Aleduss07/campustareas-docker (privado).
 

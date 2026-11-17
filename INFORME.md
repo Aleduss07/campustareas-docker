@@ -4,7 +4,7 @@
 
 Se han preparado todos los archivos de despliegue y los cinco retos opcionales. Por indicación del usuario, el cliente Android del paso 6 se sustituye por un cliente web en `web/`: crea, lista, filtra, busca y completa tareas a través del balanceador. Esta sustitución requiere que el docente acepte el cambio de plataforma para su rúbrica de Android.
 
-Se ejecutaron los contenedores y se verificaron persistencia, ambos algoritmos de balanceo, caída de réplicas, datos compartidos, cliente web real en Chromium y versión 1.1.0. Trivy encontró 20 vulnerabilidades (6 HIGH, 13 MEDIUM, 1 LOW), documentadas en VULNERABILIDADES.md. Solo la publicación GHCR permanece bloqueada por scopes insuficientes de la credencial existente. Las evidencias son reales.
+Se ejecutaron los contenedores y se verificaron persistencia, ambos algoritmos de balanceo, caída de réplicas, datos compartidos, cliente web real en Chromium y versión 1.1.0. Trivy encontró 20 vulnerabilidades (6 HIGH, 13 MEDIUM, 1 LOW), documentadas en VULNERABILIDADES.md. La imagen 1.0.0 está publicada en GHCR y su descarga por digest fue verificada. Los cinco retos opcionales están completados. Las evidencias son reales.
 
 Repositorio: https://github.com/Aleduss07/campustareas-docker (privado).
 
@@ -84,7 +84,7 @@ Reduce los privilegios del proceso dentro del contenedor. Si se compromete la AP
 1. **Secretos**: implementado `.env` local con clave aleatoria y `.env.example`; verificar con `git check-ignore .env`. Nunca agregar `.env` al repositorio.
 2. **least_conn**: implementados `nginx/least-conn.conf` y `compose.least-conn.yaml`. Ejecutar `03-Balanceo.ps1 -LeastConn`. Round robin reparte por turnos; least_conn elige la réplica con menos conexiones activas. En solicitudes secuenciales rápidas pueden parecer iguales y no hay garantía de observar un reparto distinto. La ejecución real obtuvo 3, 2 y 1 réplicas, todas con HTTP 200. Para mostrar su ventaja se necesita tráfico concurrente con duraciones variables; `/v1/trabajo-pesado` permite explorar carga, aunque su duración es similar entre peticiones. La prueba exige disponibilidad y visibilidad de tres réplicas, no una secuencia estricta.
 3. **Vulnerabilidades**: completado con Trivy porque Scout exigía login Docker Hub. Resultado: 20 hallazgos. VULNERABILIDADES.md explica CVE-2026-102276 en brace-expansion 5.0.9 incluido con npm: riesgo de denegación de servicio y corrección propuesta. evidencias/trivy.json contiene el reporte completo.
-4. **GHCR**: script `06-Publicar.ps1` preparado para `aleduss07`, identidad inferida de Git (`Aleduss07`). Ejecuta login, tag y push a `ghcr.io/aleduss07/campus-api:1.0.0`; El login existente tuvo éxito; el push devolvió permission_denied por scopes insuficientes. Hace falta autenticar Docker con un PAT clásico con write:packages y repetir el push. No envíes el token al chat. Un PAT clásico necesita `write:packages` y las autorizaciones de organización que correspondan. Revisar la visibilidad del paquete en GitHub si el docente debe descargarlo.
+4. **GHCR: completado.** Se autenticó Docker con un token clásico autorizado para write:packages, se etiquetó y publicó `ghcr.io/aleduss07/campus-api:1.0.0`. El push finalizó con código 0. Digest: `sha256:0cc9f13301eb00beeed48ade831ac6f380d0aaa9b97c48e48f83b82cf9d303fa`. Se verificó docker pull por ese digest y se ejecutó Node desde la imagen descargada: versión 1.0.0 y uid=1000. Evidencia: evidencias/reto-ghcr.log.
 5. **1.1.0**: script `07-Version.ps1` construye con `--build-arg APP_VERSION=1.1.0`, despliega, consulta 12 veces `/v1/info`, comprueba la versión y actualiza `.env` solo después de verificar. Resultado: las 12 respuestas mostraron 1.1.0 con tres réplicas distintas. Se conservan ambas imágenes para Kubernetes y .env quedó configurado para 1.1.0.
 
 ## Evidencias y entrega
@@ -95,4 +95,4 @@ Las salidas reales revisadas están en evidencias/. El cliente creó una tarea q
 
 [Captura móvil](evidencias/captura-web-movil.png).
 
-La web sustituye Android por decisión del usuario. La publicación GHCR sigue pendiente de autenticar con write:packages; no se presenta el intento rechazado como una publicación completada.
+La web sustituye Android por decisión del usuario. Todas las pruebas de despliegue y los cinco retos opcionales están completados. El paquete GHCR conserva su propia configuración de acceso; el repositorio GitHub es privado.

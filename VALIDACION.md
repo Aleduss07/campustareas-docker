@@ -18,7 +18,7 @@ Fecha: 17 de noviembre de 2026. Docker Engine 29.7.2, Docker Desktop 4.86.0 y Co
 | Caché y tamaños | npm ci reutilizado; COPY src reconstruido; 250 MB frente a 1.64 GB de DISK USAGE | 04-analisis.log |
 | Trivy | 20 hallazgos: 6 HIGH, 13 MEDIUM, 1 LOW | trivy.json, VULNERABILIDADES.md |
 | Versión 1.1.0 | 12 respuestas correctas, tres réplicas | reto-version.log |
-| GHCR | Login correcto, push rechazado por scopes insuficientes | reto-ghcr.log |
+| GHCR | Push correcto, descarga por digest y ejecución verificadas; versión 1.0.0, uid=1000 | reto-ghcr.log |
 | Cierre y limpieza | down y image prune completados; imágenes etiquetadas y volumen conservados | 09-cierre.log |
 
 Scout pedía autenticación Docker Hub: se utilizó Trivy, alternativa admitida por el PDF. La CVE analizada procede del reporte real. No se declara corregida ni publicada una imagen que no lo esté.
@@ -30,3 +30,5 @@ Se corrigieron dos problemas de los scripts en Windows PowerShell: enumerar arra
 Se revisó que las evidencias no contengan la contraseña de PostgreSQL; .env permanece ignorado por Git. Repositorio privado: https://github.com/Aleduss07/campustareas-docker.
 
 Después del cierre se volvió a levantar la pila con 1.1.0 para que el usuario pueda abrir http://localhost:8080. Los contenedores se dejaron activos.
+
+Imagen publicada: `ghcr.io/aleduss07/campus-api:1.0.0`. Digest verificado: `sha256:0cc9f13301eb00beeed48ade831ac6f380d0aaa9b97c48e48f83b82cf9d303fa`. Los cinco retos opcionales están completados.
