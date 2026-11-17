@@ -8,7 +8,7 @@ Get-Content .env | ForEach-Object {
 $script:Base = "http://localhost:$($env:HTTP_PORT)/"
 if (!$env:HTTP_PORT) { $script:Base = 'http://localhost:8080/' }
 function Docker {
-    # Out-Host hace que Start-Transcript tambien guarde stdout/stderr nativos.
+    # Incluye la salida de Docker en la transcripcion de ejecucion.
     $preferencia = $ErrorActionPreference
     try {
         $ErrorActionPreference = 'Continue'
@@ -31,8 +31,7 @@ function Api($Ruta, $Metodo = 'GET', $Datos = $null) {
     $p = @{ Uri = "${script:Base}$Ruta"; Method = $Metodo; TimeoutSec = 20 }
     if ($null -ne $Datos) { $p.ContentType = 'application/json'; $p.Body = [Text.Encoding]::UTF8.GetBytes(($Datos | ConvertTo-Json -Compress)) }
     $resultado = Invoke-RestMethod @p
-    # Windows PowerShell conserva la respuesta JSON array como un objeto unico.
-    # Enumerar explicitamente evita contar [] como una fila.
+    # Enumera los arrays JSON para conservar el recuento correcto de tareas.
     if ($resultado -is [array]) {
         foreach ($elemento in $resultado) { Write-Output $elemento }
     } else { Write-Output $resultado }

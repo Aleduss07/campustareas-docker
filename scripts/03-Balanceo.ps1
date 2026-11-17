@@ -6,7 +6,7 @@ if ($LeastConn) { $archivos += @('-f', 'compose.least-conn.yaml'); $nombre = 're
 Start-Transcript -Path "evidencias/$nombre.log" -Force
 try {
     Docker compose @archivos up -d --build --remove-orphans --wait
-    # El montaje puede cambiar sin recrear el contenedor: recargar siempre.
+    # Recarga Nginx para aplicar la configuracion de balanceo.
     Docker compose @archivos exec -T balanceador nginx -t
     Docker compose @archivos exec -T balanceador nginx -s reload
     Docker compose @archivos ps
@@ -17,7 +17,7 @@ try {
         Reparto 2
         Docker compose logs balanceador --tail 20
     } finally { Docker compose start api2 }
-    # Dejar vencer la exclusion pasiva de Nginx tras la recuperacion.
+    # Espera a que termine la exclusion temporal de la replica recuperada.
     Start-Sleep -Seconds 12
     $t = Api 'v1/tareas' POST @{ titulo = "Prueba compartida $nombre" }
     1..12 | ForEach-Object {

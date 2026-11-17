@@ -1,4 +1,4 @@
-// API de CampusTareas para las prácticas de Docker y Kubernetes.
+// API REST de CampusTareas.
 import express from 'express';
 import os from 'node:os';
 import crypto from 'node:crypto';
@@ -6,7 +6,7 @@ import { pool, prepararBaseDeDatos } from './db.js';
 
 const PORT = Number(process.env.PORT ?? 3000);
 const APP_VERSION = process.env.APP_VERSION ?? 'dev';
-const REPLICA = os.hostname(); // en Docker y Kubernetes es el nombre del contenedor o del Pod
+const REPLICA = os.hostname(); // Nombre del contenedor que atiende la solicitud.
 
 const log = (nivel, msg, extra = {}) =>
   console.log(JSON.stringify({ t: new Date().toISOString(), nivel, msg, replica: REPLICA, ...extra }));
@@ -14,7 +14,7 @@ const log = (nivel, msg, extra = {}) =>
 const app = express();
 app.use(express.json());
 
-// Cada respuesta indica qué réplica la atendió (útil para ver el balanceo)
+// Identifica la réplica que atiende cada solicitud.
 app.use((req, res, next) => {
   res.setHeader('X-Replica', REPLICA);
   const inicio = Date.now();
@@ -92,7 +92,7 @@ app.patch('/v1/tareas/:id', async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
-// ---------- Trabajo pesado (para las pruebas de autoescalado) ----------
+// ---------- Carga de CPU para pruebas de rendimiento ----------
 // Consume CPU durante unos milisegundos, como lo haría generar un reporte.
 app.get('/v1/trabajo-pesado', (_req, res) => {
   const fin = Date.now() + 50;

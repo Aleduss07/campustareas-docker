@@ -4,7 +4,7 @@ $temporal = Join-Path $PWD 'api-cache-prueba'
 $creado = $false
 try {
     Docker build --progress=plain -t campus-api:1.0.0 ./api
-    # Copia independiente para modificar una linea sin tocar el backend entregado.
+    # Aisla el cambio de codigo para comprobar la reutilizacion de dependencias.
     if (Test-Path $temporal) { throw 'Ya existe api-cache-prueba; revisar antes de continuar.' }
     New-Item -ItemType Directory $temporal | Out-Null
     $creado = $true
@@ -17,7 +17,7 @@ try {
     Docker image inspect campus-api:1.0.0 campus-api:pesada --format '{{.RepoTags}} bytes={{.Size}} usuario={{.Config.User}}'
     Docker run --rm --entrypoint id campus-api:1.0.0
 } finally {
-    # Se borra solo la copia temporal creada por este script, dentro del proyecto.
+    # Elimina unicamente el contexto generado para la prueba de cache.
     $permitido = [IO.Path]::GetFullPath((Join-Path $PWD 'api-cache-prueba'))
     if ($creado -and (Test-Path $temporal) -and ([IO.Path]::GetFullPath($temporal) -eq $permitido) -and $permitido.StartsWith([IO.Path]::GetFullPath($PWD.Path) + [IO.Path]::DirectorySeparatorChar)) {
         Remove-Item -LiteralPath $temporal -Recurse -Force

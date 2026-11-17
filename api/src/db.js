@@ -24,8 +24,7 @@ pool.on('error', (err) => {
 
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// Crea la tabla si no existe. Reintenta mientras la base de datos arranca,
-// algo habitual en Docker Compose y en Kubernetes.
+// Crea la tabla si no existe y reintenta mientras PostgreSQL termina de iniciar.
 export async function prepararBaseDeDatos(log) {
   for (let intento = 1; intento <= 15; intento++) {
     try {

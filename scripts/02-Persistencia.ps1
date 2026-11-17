@@ -1,4 +1,4 @@
-# Usa exclusivamente el proyecto de laboratorio campus-una; borra su volumen de prueba.
+# La prueba elimina unicamente el volumen de campus-una.
 . "$PSScriptRoot/Comun.ps1"
 Start-Transcript -Path evidencias/02-persistencia.log -Force
 try {

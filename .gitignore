@@ -2,11 +2,6 @@
 .env.*
 !.env.example
 node_modules/
+npm-debug.log*
 /evidencias/
-/informe/
-.docker-local/
-.tools/
-.idea/
-__pycache__/
-*.pyc
-~$*.docx
+/api-cache-prueba/
