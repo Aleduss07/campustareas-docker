@@ -3,8 +3,7 @@
 !.env.example
 node_modules/
 /evidencias/
-/informe/*
-!/informe/Informe CampusTareas Docker - Revisado.pdf
+/informe/
 .docker-local/
 .tools/
 .idea/
