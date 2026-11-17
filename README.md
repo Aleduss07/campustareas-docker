@@ -6,6 +6,8 @@ Implementación de la guía con tres réplicas, PostgreSQL persistente, balanceo
 
 - [Guía de ejecución y pruebas](GUIA-EJECUCION.md)
 - [Informe y ocho respuestas de análisis](INFORME.md)
+- [Informe en la hoja membretada original (Word)](informe/Informe%20CampusTareas%20Docker.docx)
+- [Informe en PDF](informe/Informe%20CampusTareas%20Docker.pdf)
 - [Resultados de las validaciones](VALIDACION.md)
 - [Evidencias que generan los scripts](evidencias/README.md)
 

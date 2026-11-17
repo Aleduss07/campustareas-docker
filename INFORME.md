@@ -61,7 +61,7 @@ Cada contenedor tiene su propio espacio de red. Dentro de la API, `localhost` id
 
 ### 4. Persistencia
 
-`docker compose down` elimina contenedores y red, conservando el volumen nombrado. PostgreSQL escribe en `/var/lib/postgresql/data`, montado desde `pgdata`, y vuelve a leerlo al arrancar. `down -v` elimina además ese volumen y, al crearse uno nuevo, la tabla queda vacía. En Docker Desktop el volumen se almacena en el disco administrado del entorno Linux de Docker, no en el sistema de archivos efímero de la API. `02-Persistencia.ps1` realiza ambas comprobaciones exclusivamente en el proyecto de prueba `campus-una`. Los datos de `campustareas` quedan separados. Resultado observado: la tarea id=1, «Informe de Docker», apareció tras down; después de down -v se obtuvo []. Ambas comprobaciones terminaron con OK. Resultado observado: la tarea id=1, ?Informe de Docker?, apareci? tras `down` y el resultado tras `down -v` fue `[]`; ambas comprobaciones terminaron con `OK` en el log.
+`docker compose down` elimina contenedores y red, conservando el volumen nombrado. PostgreSQL escribe en `/var/lib/postgresql/data`, montado desde `pgdata`, y vuelve a leerlo al arrancar. `down -v` elimina además ese volumen y, al crearse uno nuevo, la tabla queda vacía. En Docker Desktop el volumen se almacena en el disco administrado del entorno Linux de Docker, no en el sistema de archivos efímero de la API. `02-Persistencia.ps1` realiza ambas comprobaciones exclusivamente en el proyecto de prueba `campus-una`. Los datos de `campustareas` quedan separados. Resultado observado: la tarea id=1, «Informe de Docker», apareció tras down; después de down -v se obtuvo []. Ambas comprobaciones terminaron con OK.
 
 ### 5. Caída de api2
 
@@ -77,7 +77,7 @@ Una clave literal en Compose puede filtrarse por el historial Git, copias o revi
 
 ### 8. USER node
 
-Reduce los privilegios del proceso dentro del contenedor. Si se compromete la API, el atacante no obtiene automáticamente el usuario root del contenedor. `--chown=node:node` permite acceder a los archivos necesarios y el puerto 3000 no requiere privilegios. No sustituye el aislamiento, las actualizaciones ni los controles del host. `04-Analisis.ps1` registr? `uid=1000(node) gid=1000(node)`, y `image inspect` confirm? `usuario=node` en ambas im?genes.
+Reduce los privilegios del proceso dentro del contenedor. Si se compromete la API, el atacante no obtiene automáticamente el usuario root del contenedor. `--chown=node:node` permite acceder a los archivos necesarios y el puerto 3000 no requiere privilegios. No sustituye el aislamiento, las actualizaciones ni los controles del host. `04-Analisis.ps1` registró `uid=1000(node) gid=1000(node)`, y `image inspect` confirmó `usuario=node` en ambas imágenes.
 
 ## Retos opcionales
 
