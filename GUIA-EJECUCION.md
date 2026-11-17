@@ -61,6 +61,6 @@ git commit -m "Completar despliegue Docker, cliente web y retos de CampusTareas"
 
 El cierre conserva datos e imágenes. La limpieza `docker image prune -f` propuesta en el PDF es global para las imágenes sin etiqueta del motor: ejecútala aparte si deseas esa limpieza. No se automatiza sobre imágenes de otros proyectos.
 
-Revisa los logs antes de compartirlos y agrégalos individualmente con `git add -f evidencias/ARCHIVO.log` si no contienen secretos. Para entregar el enlace del repositorio todavía tendrás que crear o elegir un remoto GitHub y subirlo. El paquete GHCR tiene su propia URL y permisos.
+Revisa los logs antes de compartirlos y agrégalos individualmente con `git add -f evidencias/ARCHIVO.log` si no contienen secretos. El repositorio de esta práctica es https://github.com/Aleduss07/campustareas-docker y se creó privado. El paquete GHCR tiene su propia URL y permisos; su publicación espera una credencial con write:packages.
 
 Si aparece «permission denied» sobre `docker_engine` desde el agente pero `docker version` funciona en tu terminal normal, el problema es el aislamiento de esa sesión. No hace falta reinstalar Docker ni exponer su API TCP. Reabrir la tarea con los permisos adecuados o ejecutar estos scripts desde la terminal normal permite continuar.

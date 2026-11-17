@@ -8,8 +8,17 @@ Get-Content .env | ForEach-Object {
 $script:Base = "http://localhost:$($env:HTTP_PORT)/"
 if (!$env:HTTP_PORT) { $script:Base = 'http://localhost:8080/' }
 function Docker {
-    & docker.exe @args
-    if ($LASTEXITCODE -ne 0) { throw "Docker fallo ($LASTEXITCODE): $($args -join ' ')" }
+    # Out-Host hace que Start-Transcript tambien guarde stdout/stderr nativos.
+    $preferencia = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'
+        & docker.exe @args 2>&1 | ForEach-Object {
+            $linea = $_.ToString()
+            if ($linea -ne 'System.Management.Automation.RemoteException') { Write-Host $linea }
+        }
+        $codigo = $LASTEXITCODE
+    } finally { $ErrorActionPreference = $preferencia }
+    if ($codigo -ne 0) { throw "Docker fallo ($codigo). Revisa la salida anterior." }
 }
 function Esperar {
     for ($n = 0; $n -lt 60; $n++) {
@@ -21,7 +30,12 @@ function Esperar {
 function Api($Ruta, $Metodo = 'GET', $Datos = $null) {
     $p = @{ Uri = "${script:Base}$Ruta"; Method = $Metodo; TimeoutSec = 20 }
     if ($null -ne $Datos) { $p.ContentType = 'application/json'; $p.Body = [Text.Encoding]::UTF8.GetBytes(($Datos | ConvertTo-Json -Compress)) }
-    Invoke-RestMethod @p
+    $resultado = Invoke-RestMethod @p
+    # Windows PowerShell conserva la respuesta JSON array como un objeto unico.
+    # Enumerar explicitamente evita contar [] como una fila.
+    if ($resultado -is [array]) {
+        foreach ($elemento in $resultado) { Write-Output $elemento }
+    } else { Write-Output $resultado }
 }
 function Comprobar($Condicion, $Mensaje) { if (!$Condicion) { throw $Mensaje }; Write-Output "OK: $Mensaje" }
 function Reparto([int]$Esperadas) {

@@ -2,7 +2,7 @@
 
 Los scripts guardan transcripciones reales en esta carpeta. Los logs estan ignorados por Git por defecto: revisa que no contengan secretos antes de adjuntarlos al informe o agregarlos con `git add -f evidencias/nombre.log`.
 
-Pendientes de ejecucion en un entorno con acceso a Docker:
+Evidencias de ejecuciones reales:
 
 - 01-manual.log: versiones, imagen, capas, red, peticion y fallo sin DATABASE_URL.
 - 02-persistencia.log: lectura tras down y tras down -v.
@@ -14,4 +14,4 @@ Pendientes de ejecucion en un entorno con acceso a Docker:
 - reto-version.log: respuestas reales con version 1.1.0.
 - 08-web.log y captura-web.png: tarea creada desde el navegador y prueba con una sola replica.
 
-No se incluyen salidas inventadas. VALIDACION.md registra lo que se pudo comprobar en esta sesion.
+01-imagen-y-configuracion.log complementa la transcripcion manual con salidas nativas completas. reto-trivy.log y trivy.json documentan el escaneo alternativo. Las capturas PNG son del cliente real. reto-ghcr.log registra un intento rechazado por scopes, pendiente de una publicacion correcta. VALIDACION.md resume los resultados.

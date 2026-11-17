@@ -28,6 +28,6 @@ try {
     try {
         Docker compose stop api1 api3
         Reparto 1
-        Write-Output 'Puede verificarse Android con solo api2 activa durante esta fase usando scripts/Android.ps1.'
+        Write-Output 'El cliente web puede verificarse con una sola replica mediante scripts/08-Web.ps1.'
     } finally { Docker compose start api1 api3 }
 } finally { Stop-Transcript }

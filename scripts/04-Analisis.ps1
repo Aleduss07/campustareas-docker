@@ -10,7 +10,7 @@ try {
     $creado = $true
     Copy-Item api/package*.json,api/Dockerfile,api/.dockerignore $temporal
     Copy-Item api/src $temporal -Recurse
-    Add-Content "$temporal/src/server.js" "`n// Prueba de invalidacion de cache: cambio solo en codigo."
+    Add-Content "$temporal/src/server.js" "`n// Prueba de cache: $([DateTime]::UtcNow.ToString('o'))"
     Docker build --progress=plain -t campus-api:cache ./api-cache-prueba
     Docker build -f api/Dockerfile.pesada -t campus-api:pesada ./api
     Docker images campus-api

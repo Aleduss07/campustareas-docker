@@ -9,7 +9,11 @@ Implementación de la guía con tres réplicas, PostgreSQL persistente, balanceo
 - [Validaciones realizadas y pendientes](VALIDACION.md)
 - [Evidencias que generan los scripts](evidencias/README.md)
 
-La ejecución real en Docker y la publicación GHCR están pendientes por restricciones de acceso de la sesión; no se incluyen evidencias simuladas.
+Despliegue y pruebas reales completados: persistencia, round robin, least_conn, caída de réplicas, cliente web de escritorio/móvil, versión 1.1.0 y escaneo Trivy. La publicación GHCR espera una credencial con `write:packages`.
+
+Repositorio: https://github.com/Aleduss07/campustareas-docker (privado).
+
+[Vulnerabilidades encontradas y análisis de CVE](VULNERABILIDADES.md).
 
 ---
 

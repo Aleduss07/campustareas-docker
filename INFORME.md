@@ -4,7 +4,9 @@
 
 Se han preparado todos los archivos de despliegue y los cinco retos opcionales. Por indicación del usuario, el cliente Android del paso 6 se sustituye por un cliente web en `web/`: crea, lista, filtra, busca y completa tareas a través del balanceador. Esta sustitución requiere que el docente acepte el cambio de plataforma para su rúbrica de Android.
 
-La implementación y la validación estática están realizadas. **La ejecución de contenedores, las evidencias de persistencia y balanceo, el escaneo de vulnerabilidades y la publicación en GHCR siguen pendientes**: el entorno del agente no puede conectarse al motor Docker. No se presentan como resultados observados las predicciones siguientes. Consultar `VALIDACION.md` y `evidencias/README.md`.
+Se ejecutaron los contenedores y se verificaron persistencia, ambos algoritmos de balanceo, caída de réplicas, datos compartidos, cliente web real en Chromium y versión 1.1.0. Trivy encontró 20 vulnerabilidades (6 HIGH, 13 MEDIUM, 1 LOW), documentadas en VULNERABILIDADES.md. Solo la publicación GHCR permanece bloqueada por scopes insuficientes de la credencial existente. Las evidencias son reales.
+
+Repositorio: https://github.com/Aleduss07/campustareas-docker (privado).
 
 ## Arquitectura
 
@@ -38,7 +40,7 @@ Cinco contenedores y un volumen, sin publicar puertos de la base ni de las répl
 
 ### 1. Orden de COPY y caché
 
-Las dependencias cambian menos que el código. Copiar primero los manifiestos permite reutilizar la capa de `npm ci --omit=dev` cuando solo cambia `src/server.js`. Al cambiar el código, se invalida `COPY src` y lo que dependa de él, sin reinstalar las dependencias. `04-Analisis.ps1` construye una base y otra copia con un comentario añadido, usando `--progress=plain`; no altera el código original. La salida debe mostrar `CACHED` en las instrucciones reutilizadas. Registrar las líneas reales de `evidencias/04-analisis.log`; todavía no se han observado.
+Las dependencias cambian menos que el código. Copiar primero los manifiestos permite reutilizar la capa de `npm ci --omit=dev` cuando solo cambia `src/server.js`. Al cambiar el código, se invalida `COPY src` y lo que dependa de él, sin reinstalar las dependencias. `04-Analisis.ps1` construye una base y otra copia con un comentario añadido, usando `--progress=plain`; no altera el código original. En `04-analisis.log`, la segunda construcción muestra CACHED en WORKDIR, COPY de manifiestos, RUN npm ci, COPY de node_modules y COPY de package.json. COPY src modificado termina con DONE, sin CACHED.
 
 ### 2. Imagen Alpine frente a node:24
 
@@ -51,7 +53,7 @@ docker images campus-api
 docker image inspect campus-api:1.0.0 campus-api:pesada --format '{{.RepoTags}} bytes={{.Size}}'
 ```
 
-La base completa suele tener más herramientas y paquetes, por lo que necesita más almacenamiento y transferencia si esas capas no están ya descargadas. También contiene más componentes que mantener y posibles vulnerabilidades. Un menor tamaño no garantiza por sí solo mayor seguridad: hay que escanear ambas bases y mantenerlas actualizadas. Alpine usa musl y la base Debian glibc; este proyecto usa dependencias JavaScript, pero con módulos nativos habría que reconstruirlos para la base de destino. Los tamaños medidos quedan pendientes de ejecución; no se adopta como medición el tamaño orientativo del PDF.
+La base completa suele tener más herramientas y paquetes, por lo que necesita más almacenamiento y transferencia si esas capas no están ya descargadas. También contiene más componentes que mantener y posibles vulnerabilidades. Un menor tamaño no garantiza por sí solo mayor seguridad: hay que escanear ambas bases y mantenerlas actualizadas. Alpine usa musl y la base Debian glibc; este proyecto usa dependencias JavaScript, pero con módulos nativos habría que reconstruirlos para la base de destino. Resultado real: Alpine muestra 250 MB de DISK USAGE y 63.3 MB de CONTENT SIZE, frente a 1.64 GB y 411 MB de la base completa. image inspect .Size devolvió 63,329,461 y 410,766,929 bytes (aproximadamente 6.49 veces). En este motor containerd, contenido y uso en disco son métricas distintas; el rango orientativo del PDF no se toma como requisito estricto.
 
 ### 3. db:5432 frente a localhost
 
@@ -59,11 +61,11 @@ Cada contenedor tiene su propio espacio de red. Dentro de la API, `localhost` id
 
 ### 4. Persistencia
 
-`docker compose down` elimina contenedores y red, conservando el volumen nombrado. PostgreSQL escribe en `/var/lib/postgresql/data`, montado desde `pgdata`, y vuelve a leerlo al arrancar. `down -v` elimina además ese volumen y, al crearse uno nuevo, la tabla queda vacía. En Docker Desktop el volumen se almacena en el disco administrado del entorno Linux de Docker, no en el sistema de archivos efímero de la API. `02-Persistencia.ps1` realiza ambas comprobaciones exclusivamente en el proyecto de prueba `campus-una`. Los datos de `campustareas` quedan separados.
+`docker compose down` elimina contenedores y red, conservando el volumen nombrado. PostgreSQL escribe en `/var/lib/postgresql/data`, montado desde `pgdata`, y vuelve a leerlo al arrancar. `down -v` elimina además ese volumen y, al crearse uno nuevo, la tabla queda vacía. En Docker Desktop el volumen se almacena en el disco administrado del entorno Linux de Docker, no en el sistema de archivos efímero de la API. `02-Persistencia.ps1` realiza ambas comprobaciones exclusivamente en el proyecto de prueba `campus-una`. Los datos de `campustareas` quedan separados. Resultado observado: la tarea id=1, «Informe de Docker», apareció tras down; después de down -v se obtuvo []. Ambas comprobaciones terminaron con OK. Resultado observado: la tarea id=1, ?Informe de Docker?, apareci? tras `down` y el resultado tras `down -v` fue `[]`; ambas comprobaciones terminaron con `OK` en el log.
 
 ### 5. Caída de api2
 
-El resultado real se comprobará en `03-round-robin.log`. La configuración está diseñada para reintentar peticiones de lectura en otra réplica mediante `proxy_next_upstream error timeout http_502 http_503`. `max_fails=2 fail_timeout=10s` excluye temporalmente una réplica que acumula fallos y `proxy_connect_timeout 2s` acota la espera de conexión. Algunas peticiones pueden tardar más durante la detección. No se debe prometer ausencia absoluta de errores: si fallan todas las réplicas o la base, no habrá servicio. Nginx tampoco reintenta de forma general peticiones no idempotentes ya enviadas; reintentar ciegamente un POST podría duplicar tareas.
+En `03-round-robin.log`, las 30 peticiones por escenario respondieron HTTP 200. Se observaron 3 réplicas con todas activas, 2 con api2 detenida y 1 con api1 y api3 detenidas. Nginx registró timeouts internos y reintentó correctamente. Se añadió zone campus_api 64k para compartir contadores entre sus workers. La configuración está diseñada para reintentar peticiones de lectura en otra réplica mediante `proxy_next_upstream error timeout http_502 http_503`. `max_fails=2 fail_timeout=10s` excluye temporalmente una réplica que acumula fallos y `proxy_connect_timeout 2s` acota la espera de conexión. Algunas peticiones pueden tardar más durante la detección. No se debe prometer ausencia absoluta de errores: si fallan todas las réplicas o la base, no habrá servicio. Nginx tampoco reintenta de forma general peticiones no idempotentes ya enviadas; reintentar ciegamente un POST podría duplicar tareas.
 
 ### 6. Tareas en un arreglo en memoria
 
@@ -75,16 +77,22 @@ Una clave literal en Compose puede filtrarse por el historial Git, copias o revi
 
 ### 8. USER node
 
-Reduce los privilegios del proceso dentro del contenedor. Si se compromete la API, el atacante no obtiene automáticamente el usuario root del contenedor. `--chown=node:node` permite acceder a los archivos necesarios y el puerto 3000 no requiere privilegios. No sustituye el aislamiento, las actualizaciones ni los controles del host. `04-Analisis.ps1` ejecuta `id` para registrar el usuario efectivo.
+Reduce los privilegios del proceso dentro del contenedor. Si se compromete la API, el atacante no obtiene automáticamente el usuario root del contenedor. `--chown=node:node` permite acceder a los archivos necesarios y el puerto 3000 no requiere privilegios. No sustituye el aislamiento, las actualizaciones ni los controles del host. `04-Analisis.ps1` registr? `uid=1000(node) gid=1000(node)`, y `image inspect` confirm? `usuario=node` en ambas im?genes.
 
 ## Retos opcionales
 
 1. **Secretos**: implementado `.env` local con clave aleatoria y `.env.example`; verificar con `git check-ignore .env`. Nunca agregar `.env` al repositorio.
-2. **least_conn**: implementados `nginx/least-conn.conf` y `compose.least-conn.yaml`. Ejecutar `03-Balanceo.ps1 -LeastConn`. Round robin reparte por turnos; least_conn elige la réplica con menos conexiones activas. En solicitudes secuenciales rápidas pueden parecer iguales y no hay garantía de observar un reparto distinto. Para mostrar su ventaja se necesita tráfico concurrente con duraciones variables; `/v1/trabajo-pesado` permite explorar carga, aunque su duración es similar entre peticiones. La prueba exige disponibilidad y visibilidad de tres réplicas, no una secuencia estricta.
-3. **Vulnerabilidades**: script `05-Escanear.ps1` ejecuta `docker scout cves campus-api:1.0.0`. Pendiente obtener resultados reales. Para completar: anotar una CVE, paquete, versión instalada, severidad, versión corregida y corregir actualizando la base o dependencia correspondiente, reconstruyendo y volviendo a escanear. No se inventa un identificador. Si no hay vulnerabilidades, adjuntar el resultado real y explicar que corresponde a esa imagen y esa fecha. Scout puede requerir autenticación a Docker Hub.
-4. **GHCR**: script `06-Publicar.ps1` preparado para `aleduss07`, identidad inferida de Git (`Aleduss07`). Ejecuta login, tag y push a `ghcr.io/aleduss07/campus-api:1.0.0`; falta verificar autenticación y publicación real. No envíes el token al chat. Un PAT clásico necesita `write:packages` y las autorizaciones de organización que correspondan. Revisar la visibilidad del paquete en GitHub si el docente debe descargarlo.
-5. **1.1.0**: script `07-Version.ps1` construye con `--build-arg APP_VERSION=1.1.0`, despliega, consulta 12 veces `/v1/info`, comprueba la versión y actualiza `.env` solo después de verificar. Se conservan ambas imágenes para Kubernetes.
+2. **least_conn**: implementados `nginx/least-conn.conf` y `compose.least-conn.yaml`. Ejecutar `03-Balanceo.ps1 -LeastConn`. Round robin reparte por turnos; least_conn elige la réplica con menos conexiones activas. En solicitudes secuenciales rápidas pueden parecer iguales y no hay garantía de observar un reparto distinto. La ejecución real obtuvo 3, 2 y 1 réplicas, todas con HTTP 200. Para mostrar su ventaja se necesita tráfico concurrente con duraciones variables; `/v1/trabajo-pesado` permite explorar carga, aunque su duración es similar entre peticiones. La prueba exige disponibilidad y visibilidad de tres réplicas, no una secuencia estricta.
+3. **Vulnerabilidades**: completado con Trivy porque Scout exigía login Docker Hub. Resultado: 20 hallazgos. VULNERABILIDADES.md explica CVE-2026-102276 en brace-expansion 5.0.9 incluido con npm: riesgo de denegación de servicio y corrección propuesta. evidencias/trivy.json contiene el reporte completo.
+4. **GHCR**: script `06-Publicar.ps1` preparado para `aleduss07`, identidad inferida de Git (`Aleduss07`). Ejecuta login, tag y push a `ghcr.io/aleduss07/campus-api:1.0.0`; El login existente tuvo éxito; el push devolvió permission_denied por scopes insuficientes. Hace falta autenticar Docker con un PAT clásico con write:packages y repetir el push. No envíes el token al chat. Un PAT clásico necesita `write:packages` y las autorizaciones de organización que correspondan. Revisar la visibilidad del paquete en GitHub si el docente debe descargarlo.
+5. **1.1.0**: script `07-Version.ps1` construye con `--build-arg APP_VERSION=1.1.0`, despliega, consulta 12 veces `/v1/info`, comprueba la versión y actualiza `.env` solo después de verificar. Resultado: las 12 respuestas mostraron 1.1.0 con tres réplicas distintas. Se conservan ambas imágenes para Kubernetes y .env quedó configurado para 1.1.0.
 
-## Entrega final pendiente de evidencias
+## Evidencias y entrega
 
-Después de ejecutar los scripts, incorporar los logs revisados y una captura web, sustituir los estados pendientes de este informe por resultados observados, analizar una CVE real si existe y agregar el enlace del repositorio y el digest del push. La publicación de la imagen y la publicación de un repositorio son acciones distintas; todavía no existe un remoto configurado.
+Las salidas reales revisadas están en evidencias/. El cliente creó una tarea que se comprobó mediante GET, la completó, volvió a marcarla pendiente y continuó leyendo y creando con solo api2 activa. Las capturas muestran escritorio a 1366 px y móvil a 390 px, sin desbordamiento horizontal. No hubo errores JavaScript.
+
+![Cliente web](evidencias/captura-web.png)
+
+[Captura móvil](evidencias/captura-web-movil.png).
+
+La web sustituye Android por decisión del usuario. La publicación GHCR sigue pendiente de autenticar con write:packages; no se presenta el intento rechazado como una publicación completada.

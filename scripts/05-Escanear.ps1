@@ -1,6 +1,12 @@
 . "$PSScriptRoot/Comun.ps1"
 Start-Transcript -Path evidencias/reto-vulnerabilidades.log -Force
 try {
-    Docker scout cves campus-api:1.0.0
-    Write-Output 'Guarda una CVE real del resultado, paquete, version afectada, version corregida y plan de actualizacion en INFORME.md. Si no hay hallazgos, registra ese resultado sin inventar una CVE.'
+    & docker.exe scout cves campus-api:1.0.0
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output 'Scout no disponible; se utiliza Trivy, alternativa admitida por la guia.'
+        Docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "${PWD}/evidencias:/report" -v campus-trivy-cache:/root/.cache/ aquasec/trivy:latest image --scanners vuln --format json --output /report/trivy.json campus-api:1.0.0
+        $reporte = Get-Content evidencias/trivy.json -Raw | ConvertFrom-Json
+        $reporte.Results | ForEach-Object { $_.Vulnerabilities } | Where-Object { $_ } | Select-Object VulnerabilityID,PkgName,InstalledVersion,FixedVersion,Severity | Format-Table -AutoSize
+    }
+    Write-Output 'Analiza una CVE real del resultado en INFORME.md. Si no hay hallazgos, registra ese resultado sin inventar una CVE.'
 } finally { Stop-Transcript }

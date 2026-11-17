@@ -1,0 +1,49 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20261117145029
+Nombre de usuario: Alexis\Aleduss
+Usuario RunAs: Alexis\Aleduss
+Nombre de la configuración: 
+Máquina: ALEXIS (Microsoft Windows NT 10.0.26300.0)
+Aplicación host: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/02-Persistencia.ps1
+Id. de proceso: 5880
+PSVersion: 5.1.26100.9818
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9818
+BuildVersion: 10.0.26100.9818
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+La transcripción ha comenzado. El archivo de salida es evidencias/02-persistencia.log
+
+
+{
+    "id":  1,
+    "titulo":  "Informe de Docker",
+    "descripcion":  "",
+    "fechaEntrega":  "2026-11-27",
+    "completada":  false
+}
+
+
+{
+    "id":  1,
+    "titulo":  "Informe de Docker",
+    "descripcion":  "",
+    "fechaEntrega":  "2026-11-27",
+    "completada":  false
+}
+OK: La tarea sobrevive a down
+
+
+[
+
+]
+OK: La lista queda vacia tras down -v
+
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20261117145112
+**********************

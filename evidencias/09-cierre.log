@@ -1,0 +1,93 @@
+$ docker compose down
+ Container campustareas-balanceador-1 Stopping 
+ Container campustareas-balanceador-1 Stopped 
+ Container campustareas-balanceador-1 Removing 
+ Container campustareas-balanceador-1 Removed 
+ Container campustareas-api3-1 Stopping 
+ Container campustareas-api2-1 Stopping 
+ Container campustareas-api1-1 Stopping 
+ Container campustareas-api3-1 Stopped 
+ Container campustareas-api3-1 Removing 
+ Container campustareas-api3-1 Removed 
+ Container campustareas-api1-1 Stopped 
+ Container campustareas-api1-1 Removing 
+ Container campustareas-api1-1 Removed 
+ Container campustareas-api2-1 Stopped 
+ Container campustareas-api2-1 Removing 
+ Container campustareas-api2-1 Removed 
+ Container campustareas-db-1 Stopping 
+ Container campustareas-db-1 Stopped 
+ Container campustareas-db-1 Removing 
+ Container campustareas-db-1 Removed 
+ Network campustareas_default Removing 
+ Network campustareas_default Removed 
+
+Exit code: 0
+$ docker image prune -f
+Total reclaimed space: 0B
+
+Exit code: 0
+$ docker images campus-api
+IMAGE               ID             DISK USAGE   CONTENT SIZE   EXTRA
+campus-api:1.0.0    0cc9f13301eb        250MB         63.3MB        
+campus-api:1.1.0    b52bceac0828        250MB         63.3MB        
+campus-api:cache    6f4a25f05a22        250MB         63.3MB        
+campus-api:pesada   5f4cda10c43a       1.64GB          411MB        
+
+Exit code: 0
+$ docker compose up -d --wait
+ Network campustareas_default Creating 
+ Network campustareas_default Created 
+ Container campustareas-db-1 Creating 
+ Container campustareas-db-1 Created 
+ Container campustareas-api3-1 Creating 
+ Container campustareas-api2-1 Creating 
+ Container campustareas-api1-1 Creating 
+ Container campustareas-api3-1 Created 
+ Container campustareas-api2-1 Created 
+ Container campustareas-api1-1 Created 
+ Container campustareas-balanceador-1 Creating 
+ Container campustareas-balanceador-1 Created 
+ Container campustareas-db-1 Starting 
+ Container campustareas-db-1 Started 
+ Container campustareas-db-1 Waiting 
+ Container campustareas-db-1 Waiting 
+ Container campustareas-db-1 Waiting 
+ Container campustareas-db-1 Healthy 
+ Container campustareas-db-1 Healthy 
+ Container campustareas-api3-1 Starting 
+ Container campustareas-api1-1 Starting 
+ Container campustareas-db-1 Healthy 
+ Container campustareas-api2-1 Starting 
+ Container campustareas-api2-1 Started 
+ Container campustareas-api1-1 Started 
+ Container campustareas-api3-1 Started 
+ Container campustareas-api3-1 Waiting 
+ Container campustareas-api1-1 Waiting 
+ Container campustareas-api2-1 Waiting 
+ Container campustareas-api3-1 Healthy 
+ Container campustareas-api2-1 Healthy 
+ Container campustareas-api1-1 Healthy 
+ Container campustareas-balanceador-1 Starting 
+ Container campustareas-balanceador-1 Started 
+ Container campustareas-api1-1 Waiting 
+ Container campustareas-api2-1 Waiting 
+ Container campustareas-api3-1 Waiting 
+ Container campustareas-balanceador-1 Waiting 
+ Container campustareas-db-1 Waiting 
+ Container campustareas-db-1 Healthy 
+ Container campustareas-api2-1 Healthy 
+ Container campustareas-balanceador-1 Healthy 
+ Container campustareas-api3-1 Healthy 
+ Container campustareas-api1-1 Healthy 
+
+Exit code: 0
+$ docker compose ps
+NAME                         IMAGE                 COMMAND                  SERVICE       CREATED          STATUS                    PORTS
+campustareas-api1-1          campus-api:1.1.0      "docker-entrypoint.s…"   api1          12 seconds ago   Up 6 seconds (healthy)    3000/tcp
+campustareas-api2-1          campus-api:1.1.0      "docker-entrypoint.s…"   api2          12 seconds ago   Up 6 seconds (healthy)    3000/tcp
+campustareas-api3-1          campus-api:1.1.0      "docker-entrypoint.s…"   api3          12 seconds ago   Up 6 seconds (healthy)    3000/tcp
+campustareas-balanceador-1   nginx:stable-alpine   "/docker-entrypoint.…"   balanceador   12 seconds ago   Up Less than a second     0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+campustareas-db-1            postgres:17-alpine    "docker-entrypoint.s…"   db            12 seconds ago   Up 12 seconds (healthy)   5432/tcp
+
+Exit code: 0

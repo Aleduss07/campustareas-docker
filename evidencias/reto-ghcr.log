@@ -1,0 +1,51 @@
+$ docker tag campus-api:1.0.0 ghcr.io/aleduss07/campus-api:1.0.0
+
+$ docker push ghcr.io/aleduss07/campus-api:1.0.0
+The push refers to repository [ghcr.io/aleduss07/campus-api]
+ed51f629e640: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+ed51f629e640: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+ed51f629e640: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+ed51f629e640: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+ed51f629e640: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+ed51f629e640: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+881fc932939e: Waiting
+ed51f629e640: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+ed51f629e640: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+ed51f629e640: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+44136fa355b3: Waiting
+86781d25d398: Waiting
+881fc932939e: Waiting
+7eb569707982: Waiting
+7bb632bc9bd7: Waiting
+e95ec166e666: Waiting
+40a0e09055aa: Waiting
+a0f34f55e235: Waiting
+ed51f629e640: Waiting
+fcf6390bdd9b: Waiting
+error from registry: permission_denied: The token provided does not match expected scopes.

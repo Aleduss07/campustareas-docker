@@ -1,0 +1,154 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20261117145335
+Nombre de usuario: Alexis\Aleduss
+Usuario RunAs: Alexis\Aleduss
+Nombre de la configuración: 
+Máquina: ALEXIS (Microsoft Windows NT 10.0.26300.0)
+Aplicación host: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/03-Balanceo.ps1
+Id. de proceso: 7608
+PSVersion: 5.1.26100.9818
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9818
+BuildVersion: 10.0.26100.9818
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+La transcripción ha comenzado. El archivo de salida es evidencias/03-round-robin.log
+
+
+
+
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+OK: Se observaron 3 replicas distintas en 30 peticiones
+
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.3:3000, 172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.3:3000, 172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"31103d838d08"} X-Upstream=172.24.0.4:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"64556eda077d"} X-Upstream=172.24.0.5:3000
+OK: Se observaron 2 replicas distintas en 30 peticiones
+
+
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+OK: Todas las lecturas incluyen la misma tarea
+[
+    {
+        "id":  1,
+        "titulo":  "Prueba compartida 03-round-robin",
+        "descripcion":  "",
+        "fechaEntrega":  null,
+        "completada":  false
+    },
+    {
+        "id":  2,
+        "titulo":  "Prueba compartida 03-round-robin",
+        "descripcion":  "",
+        "fechaEntrega":  null,
+        "completada":  false
+    }
+]
+
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.4:3000, 172.24.0.5:3000, 172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.5:3000, 172.24.0.4:3000, 172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+200 {"app":"campustareas-api","version":"1.0.0","replica":"3a052b7abde1"} X-Upstream=172.24.0.3:3000
+OK: Se observaron 1 replicas distintas en 30 peticiones
+El cliente web puede verificarse con una sola replica mediante scripts/08-Web.ps1.
+
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20261117145415
+**********************
