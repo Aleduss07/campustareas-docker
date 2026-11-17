@@ -8,7 +8,6 @@ evidencias/*.txt
 !evidencias/README.md
 .docker-local/
 .tools/
-android/local.properties
-**/.gradle/
-**/build/
-*.apk
+.idea/
+__pycache__/
+*.pyc

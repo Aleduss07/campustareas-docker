@@ -9,7 +9,7 @@ Evidencias de ejecuciones reales:
 - 03-round-robin.log: tres replicas, caida de api2, dos replicas sin error y datos compartidos.
 - 04-analisis.log: pasos CACHED y tamanos reales.
 - reto-least-conn.log: mismo experimento con least_conn.
-- reto-vulnerabilidades.log: escaneo real; analizar una CVE encontrada.
+- reto-trivy.log y trivy.json: escaneo real y reporte de vulnerabilidades; analisis en VULNERABILIDADES.md.
 - reto-ghcr.log: push y digest del paquete.
 - reto-version.log: respuestas reales con version 1.1.0.
 - 08-web.log y captura-web.png: tarea creada desde el navegador y prueba con una sola replica.
